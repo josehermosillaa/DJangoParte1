@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Tareas</title>
+</head>
+<body>
+    <h1>Tareas</h1>
+    <ul>
+        {% for t in tareas %}
+            <li>{{ t.titulo }}: {{ t.descripcion }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
