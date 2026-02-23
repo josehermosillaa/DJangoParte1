@@ -53,3 +53,30 @@ una vez creada la app lo que debe hacer es agregarla a las aplicaciones instalad
 
 en el archivo settings.py
 buscamos INSTALLED_APPS
+
+
+## comandos que veremos igual mas adelante
+
+### migraciones
+
+``` python manage.py makemigrations``` 
+
+va a buscar todos los cambios existentes en los modelos de datos para prepararlos para su modificacion
+
+### aplicar los cambios o migrate
+
+``` python manage.py migrate```
+
+aplicar todos los cambios existentes en la base de datos
+
+
+
+una vez que nosotros creamos la primera migracion podemos crear el superuser
+### creacion de un superusuario
+
+```python manage.py createsuperuser```
+
+
+
+# NOTA USAR COMILLAS SIMPLES EN LOS NOMBRES DE TEMPLATE
+
