@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Productos disponibles{% endblock %}
+
+
+{% block content %}
+<div class="row">
+            <h1>Productos en venta</h1>
+        </div>
+        <div class="row">
+            {% for producto in productos %}
+            <div class="col-4">
+                <div class="card" style="width: 18rem;">
+                <img src={{producto.imagen_url}} class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{producto.nombre}}</h5>
+                    <p class="card-text">{{producto.descripcion}}</p>
+                    <a href="#" class="btn btn-primary">{{producto.precio}}</a>
+                </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+{%endblock %}
+
