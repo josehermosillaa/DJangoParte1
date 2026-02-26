@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Productos disponibles{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <ul>
+            {% for fruta in frutas %}
+            {% if frutas|length > 3 %}    
+            <li>{{fruta|upper}}</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+{%endblock %}
+

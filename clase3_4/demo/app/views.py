@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 #importamos el modelo de donde queremos sacar los datos
 from .models import Producto
 import random
@@ -19,4 +20,22 @@ def home(request):
         imagenes.append(producto.imagen_url)
 
 
-    return render(request, 'base.html',{'imagenes':imagenes})
+    return render(request, 'base.html',{'imagenes':imagenes, 'login':False, 'username':"Elba lazo"})
+
+
+def prueba(request):
+    items = ['Banana','Platano','Durazno', 'Naranja']
+    
+    return render(request, 'prueba.html', context={'frutas':items})
+    
+    #{{frutas}}
+    
+def error_404(request):
+    return render(request, '404.html', status=404)
+
+def ejemplo_error(request):
+    try:
+        x = 1/0 #lanza error
+        return HttpResponse(f"Resultado: {x}")
+    except ZeroDivisionError:
+        return HttpResponse("Ocurrio un error: division por cero", status = 400)

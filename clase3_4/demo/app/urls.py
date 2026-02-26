@@ -1,8 +1,13 @@
 from django.urls import path
-from .views import lista_productos, home
-
+from .views import lista_productos, home, prueba, ejemplo_error
+from django.conf.urls import handler404
 
 urlpatterns = [
     path('',lista_productos, name='lista_productos' ),
     path('inicio/',home, name='pagina_inicio' ),
+    path('prueba/',prueba, name='prueba' ),
+    path("test/",ejemplo_error, name="ejemplo")
+    
 ]
+
+handler404 = 'app.views.error_404'
