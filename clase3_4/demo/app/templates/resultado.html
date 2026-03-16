@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Productos disponibles{% endblock %}
+
+
+{% block content %}
+<h1>Los datos ingresados son</h1>
+<h2> {{nombre}}</h2>
+<h2> {{email}}</h2>
+<h2> {{contrasena}}</h2>
+
+<a href="{% url 'formulario' %}">Volver al formulario</a>
+{%endblock %}
+

@@ -3,6 +3,10 @@ from django.http import HttpResponse
 #importamos el modelo de donde queremos sacar los datos
 from .models import Producto
 import random
+
+#importacion para el formulario
+from .forms import NombreForm
+
 # Create your views here.
 
 def lista_productos(request):
@@ -39,3 +43,24 @@ def ejemplo_error(request):
         return HttpResponse(f"Resultado: {x}")
     except ZeroDivisionError:
         return HttpResponse("Ocurrio un error: division por cero", status = 400)
+    
+
+###### vista para formulario
+
+def formulario_test(request):
+
+    if request.method == 'POST':
+        form = NombreForm(request.POST)
+        if form.is_valid():
+            nombre = form.cleaned_data['nombre']
+            email = form.cleaned_data['email']
+            contrasena = form.cleaned_data['contrasena']
+
+            return render(request,'resultado.html',context = {'nombre':nombre,'email':email, 'contrasena':contrasena})
+        else:
+            return HttpResponse("error de validacion")
+
+
+    else: #metodo GET 
+        form = NombreForm()
+        return render(request, 'formulario.html', context = {'form':form})
