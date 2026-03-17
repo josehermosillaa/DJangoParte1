@@ -57,10 +57,7 @@ def formulario_test(request):
             contrasena = form.cleaned_data['contrasena']
 
             return render(request,'resultado.html',context = {'nombre':nombre,'email':email, 'contrasena':contrasena})
-        else:
-            return HttpResponse("error de validacion")
-
 
     else: #metodo GET 
         form = NombreForm()
-        return render(request, 'formulario.html', context = {'form':form})
+    return render(request, 'formulario.html', context = {'form':form})
