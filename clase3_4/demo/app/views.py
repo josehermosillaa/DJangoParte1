@@ -1,12 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 #importamos el modelo de donde queremos sacar los datos
-from .models import Producto
+from .models import Producto, Usuario
 import random
 
 #importacion para el formulario
-from .forms import NombreForm
-
+from .forms import NombreForm, ProductoForm, UsuarioForm
+from django.contrib import messages
 # Create your views here.
 
 def lista_productos(request):
@@ -61,3 +61,20 @@ def formulario_test(request):
     else: #metodo GET 
         form = NombreForm()
     return render(request, 'formulario.html', context = {'form':form})
+
+def usuario_form_view(request):
+    usuarios = Usuario.objects.all()
+
+
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Usuario registrado correctamente.')
+            return redirect('usuario_form')
+        else:
+            messages.error(request, 'Corrijan los errores en el formulario')
+    else: #metodo GET 
+        form = UsuarioForm()
+    
+    return render(request, 'usuario_form.html', context = {'form':form, 'usuarios':usuarios})
