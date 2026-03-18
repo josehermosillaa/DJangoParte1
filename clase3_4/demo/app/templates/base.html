@@ -39,10 +39,21 @@
                         <a class="nav-link" href="{% url 'formulario'%}">Formulario</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                    <div class="d-flex">
+                        {% if user.is_authenticated %}
+                            <h6>Bienvenido {{ user.username }}</h6>
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    Logout
+                                </button>
+                            </form>
+                        {% else %}
+                            <h6>No has iniciado sesion</h6>
+                            <a class="btn btn-outline-primary" href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                    </div>
+
             </div>
         </div>
     </nav>
