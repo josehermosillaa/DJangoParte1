@@ -26,7 +26,7 @@ class UsuarioForm(forms.ModelForm):
         widgets = {
             'nombre': forms.TextInput(attrs={'class':'form-control'}),
             'correo': forms.EmailInput(attrs={'class':'form-control'}),
-            'edad': forms.NumberInput(attrs={'class':'form-control'})
+            'edad': forms.NumberInput(attrs={'class':'form-control','type':"text", 'placeholder':"Disabled input", 'aria-label':"Disabled input example"})
         }
 
     def clean_nombre(self):

@@ -17,7 +17,9 @@ class Producto(models.Model):
 class Usuario(models.Model):
     nombre = models.CharField(max_length=100)
     correo = models.EmailField()
-    edad = models.IntegerField()
+    edad = models.IntegerField() #null = False blank=False
+
+
 
     def __str__(self):
         return self.nombre
