@@ -122,5 +122,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 #autenticacion login
-LOGIN_REDIRECT_URL = '/productos/'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'lista_productos'
 LOGOUT_REDIRECT_URL = 'login'

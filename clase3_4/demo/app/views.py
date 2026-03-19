@@ -9,6 +9,13 @@ from .forms import NombreForm, ProductoForm, UsuarioForm
 from django.contrib import messages
 # Create your views here.
 
+#
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic import TemplateView, View
+
+from django.core.exceptions import PermissionDenied
+#esto se utiliza para trabajar en las vistas basadas en CLASES  
+
 def lista_productos(request):
     productos = Producto.objects.all() #SELECT * FROM Producto / con el ORM de DJANGO
     return render(request, 'lista_productos.html', {'productos':productos})
@@ -63,18 +70,36 @@ def formulario_test(request):
     return render(request, 'formulario.html', context = {'form':form})
 
 def usuario_form_view(request):
-    usuarios = Usuario.objects.all()
+    if request.user.has_perm('app.change_usuario'):
+        usuarios = Usuario.objects.all()
 
 
-    if request.method == 'POST':
-        form = UsuarioForm(request.POST)
-        if form.is_valid():
-            form.save() #esto se permite ya que estamos usando un modelo de la base de datos con  MODELFORM
-            messages.success(request, 'Usuario registrado correctamente.')
-            return redirect('usuario_form')
-        else:
-            messages.error(request, 'Corrijan los errores en el formulario')
-    else: #metodo GET 
-        form = UsuarioForm()
+        if request.method == 'POST':
+            form = UsuarioForm(request.POST)
+            if form.is_valid():
+                form.save() #esto se permite ya que estamos usando un modelo de la base de datos con  MODELFORM
+                messages.success(request, 'Usuario registrado correctamente.')
+                return redirect('usuario_form')
+            else:
+                messages.error(request, 'Corrijan los errores en el formulario')
+        else: #metodo GET 
+            form = UsuarioForm()
+        
+        return render(request, 'usuario_form.html', context = {'form':form, 'usuarios':usuarios})
+            
+        
+    else:
+        raise PermissionDenied
+   
+
+
+class DashboardView(LoginRequiredMixin,PermissionRequiredMixin ,TemplateView):
+    template_name = 'dashboard.html'
+    permission_required = 'app.change_producto'
+
     
-    return render(request, 'usuario_form.html', context = {'form':form, 'usuarios':usuarios})
+class VistaProtegida(PermissionRequiredMixin, View):
+    permission_required = 'app.change_usuario'
+    
+    def get(self, request):
+            return HttpResponse("Acceso permitido")
