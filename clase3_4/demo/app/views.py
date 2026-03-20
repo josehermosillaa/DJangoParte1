@@ -16,12 +16,15 @@ from django.views.generic import TemplateView, View
 from django.core.exceptions import PermissionDenied
 #esto se utiliza para trabajar en las vistas basadas en CLASES  
 
+from django.contrib.auth.decorators import login_required, permission_required
+
+@login_required
 def lista_productos(request):
     productos = Producto.objects.all() #SELECT * FROM Producto / con el ORM de DJANGO
     return render(request, 'lista_productos.html', {'productos':productos})
     #                              key para leer los datos en el html: los datos obtenidos
 
-
+@login_required
 def home(request):
     productos = Producto.objects.all() #
     seleccion_aleatoria = random.sample(list(productos),3) #objetos de productos
@@ -33,7 +36,7 @@ def home(request):
 
     return render(request, 'base.html',{'imagenes':imagenes, 'login':False, 'username':"Elba lazo"})
 
-
+@login_required
 def prueba(request):
     items = ['Banana','Platano','Durazno', 'Naranja']
     
@@ -53,7 +56,8 @@ def ejemplo_error(request):
     
 
 ###### vista para formulario
-
+@login_required
+@permission_required('app.change_usuario', raise_exception=True)
 def formulario_test(request):
 
     if request.method == 'POST':
@@ -90,7 +94,6 @@ def usuario_form_view(request):
         
     else:
         raise PermissionDenied
-   
 
 
 class DashboardView(LoginRequiredMixin,PermissionRequiredMixin ,TemplateView):
