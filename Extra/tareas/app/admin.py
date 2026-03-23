@@ -13,4 +13,5 @@ class TaskAdmin(admin.ModelAdmin):
 
     readonly_fields = ('created_at',)
     ordering = ('-created_at',) #descendente, si no coloco signo es ascendete
+
 admin.site.register(Task, TaskAdmin)

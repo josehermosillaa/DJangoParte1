@@ -5,7 +5,7 @@ from .models import Producto, Usuario
 import random
 
 #importacion para el formulario
-from .forms import NombreForm, ProductoForm, UsuarioForm
+from .forms import NombreForm, ProductoForm, UsuarioForm, RegisterForm
 from django.contrib import messages
 # Create your views here.
 
@@ -17,6 +17,9 @@ from django.core.exceptions import PermissionDenied
 #esto se utiliza para trabajar en las vistas basadas en CLASES  
 
 from django.contrib.auth.decorators import login_required, permission_required
+
+#autologin
+from django.contrib.auth import login
 
 @login_required
 def lista_productos(request):
@@ -106,3 +109,15 @@ class VistaProtegida(PermissionRequiredMixin, View):
     
     def get(self, request):
             return HttpResponse("Acceso permitido")
+
+def register_view(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save() #guardar los datos en el modelo en que se enlaza el formulario
+            login(request, user)
+            return redirect('pagina_inicio') #o donde queramos
+    else:
+        form = RegisterForm()
+    
+    return render(request, "register.html",{"form":form})

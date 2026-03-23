@@ -3,6 +3,8 @@ from django import forms
 
 
 from .models import Producto, Usuario
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class NombreForm(forms.Form):
     nombre = forms.CharField(label='Nombre',max_length=20, error_messages={'max_length':'nombre muy largo'})
@@ -40,3 +42,10 @@ class UsuarioForm(forms.ModelForm):
         if edad < 0:
             raise forms.ValidationError('Edad debe ser un valor valido (positivo)')
         return edad
+    
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    
+    class Meta:
+        model = User
+        fields = ('username', 'email','password1', 'password2')

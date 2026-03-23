@@ -6,7 +6,7 @@
 {% block content %}
 <div class="row">
     <div class="col col-4">
-<h1>Iniciar Sesion</h1>
+<h1>Registro de Usuario</h1>
     {% if messages %}
     <div class="alert alert-danger">
         por favor corrige los errores en el formulario
@@ -21,7 +21,6 @@
         {{form.as_p}}
         <button class="button" type="submit"> Enviar</button>
     </form>
-    <a href="{% url 'register'%}">Si no estas registrado, registrese aqui.</a>
     </div>
 </div>
 {%endblock %}
